@@ -1,0 +1,89 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    inset: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.main_grid_field {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+    text-align: center;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content 200px 1fr;
+    gap: 0.5rem;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "hide_options add_question"
+        "current_question question_storage"
+        "live_preview question_storage";
+    padding: 0.5rem;
+}
+
+.question_options {
+    grid-area: add_question;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "add_question import export";
+}
+
+.add_question {
+    grid-area: add_question;
+}
+
+.import {
+    grid-area: import;
+}
+
+.export {
+    grid-area: export;
+}
+
+
+.current_question {
+    grid-area: current_question;
+}
+
+.question_storage {
+    grid-area: question_storage;
+}
+
+.hide_options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "public live";
+    grid-area: hide_options;
+    padding: 0;
+    border: 0;
+}
+
+.public {
+    grid-area: public;
+}
+
+.live {
+    grid-area: live;
+}
+
+.live_preview {
+    grid-area: live_preview;
+}

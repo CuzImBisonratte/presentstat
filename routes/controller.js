@@ -1,7 +1,7 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello from controller');
-});
+// Serve the ../frontend/controller dir
+router.use(express.static('frontend/controller'));
 
 module.exports = router;
