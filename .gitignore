@@ -1,3 +1,5 @@
-/index.js
-/node_modules
-/routes
+# Node.js Stuff
+node_modules
+
+# Config files
+config.json
