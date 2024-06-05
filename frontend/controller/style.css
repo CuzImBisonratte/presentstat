@@ -61,6 +61,7 @@ body {
 
 .question_storage {
     grid-area: question_storage;
+    overflow-y: auto;
 }
 
 .hide_options {
@@ -86,4 +87,48 @@ body {
 
 .live_preview {
     grid-area: live_preview;
+}
+
+.question {
+    display: grid;
+    grid-template-columns: 1fr 3rem 3rem;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "question_title question_start question_delete";
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.question_title {
+    grid-area: question_title;
+    font-size: 1.5rem;
+    display: grid;
+    place-content: center;
+}
+
+.question_start {
+    grid-area: question_start;
+}
+
+.question_delete {
+    grid-area: question_delete;
+}
+
+.question_start,
+.question_delete {
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.question_start img,
+.question_delete img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
