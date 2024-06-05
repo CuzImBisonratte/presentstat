@@ -19,5 +19,13 @@
             <div class="live main_grid_field">Hide Live</div>
         </div>
         <div class="live_preview main_grid_field"></div>
+        <!-- WebSocket -->
+        <script src="/ws"></script>
+        <script>
+            ws.onopen = () =>
+                ws.send(
+                    JSON.stringify({ msg_type: "register", role: "controller" })
+                );
+        </script>
     </body>
 </html>
