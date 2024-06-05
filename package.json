@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/cuzimbisonratte/presentstat#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "path": "^0.12.7",
+    "ws": "^8.17.0"
   }
 }
