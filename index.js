@@ -10,6 +10,6 @@ app.use('/live', live_view);
 const public = require('./routes/public');
 app.use('/public', public);
 
-app.listen(40404, () => {
-    console.log('Server is running on port 3000');
+app.listen(config.PORT, () => {
+    console.log('Server is running on port', config.PORT);
 });
