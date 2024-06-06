@@ -21,7 +21,7 @@ body {
 body {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: min-content 200px 1fr;
+    grid-template-rows: min-content min-content 1fr;
     gap: 0.5rem;
     grid-auto-flow: row;
     grid-template-areas:
@@ -57,6 +57,10 @@ body {
 
 .current_question {
     grid-area: current_question;
+}
+
+.current_question .question {
+    margin-bottom: 0;
 }
 
 .question_storage {
