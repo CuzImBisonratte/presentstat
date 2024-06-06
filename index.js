@@ -20,7 +20,7 @@ const public = require('./routes/public');
 app.use('/', public);
 
 // Websocket connection client (Served for all types of clients)
-const ws_client = fs.readFileSync(path.join(__dirname, 'frontend', 'ws_client.js'), 'utf8').replace('{HOST}', config.HOST).replace('{WS_PORT}', config.WS_PORT);
+const ws_client = fs.readFileSync(path.join(__dirname, 'frontend', 'ws_client.js'), 'utf8').replace('{HOST}', config.WS_HOST).replace('{WS_PORT}', config.WS_PORT_EXTERNAL);
 app.use('/ws', (req, res) => res.set('Content-Type', 'application/javascript').send(ws_client));
 
 // Websocket server
