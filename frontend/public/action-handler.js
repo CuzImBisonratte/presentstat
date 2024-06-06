@@ -4,10 +4,15 @@ ws.onopen = () =>
         JSON.stringify({ msg_type: "register", role: "public" })
     );
 
+// Variable to store whether a vote has already been cast
+let voted = false;
+
 // Handle incoming messages
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
     if (data.msg_type === "start_question") {
+        // Reset vote
+        voted = false;
         // Set question text
         document.getElementById("question-bar").innerText = data.question.question;
         // Get number of options
@@ -31,4 +36,12 @@ ws.onmessage = (event) => {
         document.getElementById("option3").innerText = "";
         document.getElementById("option4").innerText = "";
     }
+}
+
+function vote(option) {
+    // Check if a vote has already been cast
+    if (voted) return;
+    // Send vote
+    ws.send(JSON.stringify({ msg_type: "vote", option: option - 1 }));
+    voted = true;
 }

@@ -4,6 +4,7 @@ const config = require('./config');
 
 const ws_server = new ws.Server({ port: config.WS_PORT });
 
+let votes = [0, 0, 0, 0];
 let current_questionset = null;
 ws_server.on('connection', (ws) => {
     ws.on('message', (message) => {
@@ -87,6 +88,18 @@ ws_server.on('connection', (ws) => {
                             client.send(JSON.stringify({ msg_type: 'stop_question' }));
                     });
                 }
+                break;
+            case 'vote':
+                // Check permissions
+                if (ws.role !== 'public') return;
+                // Check if the question is active
+                if (!current_questionset) return;
+                // Check if the option is valid
+                if (message.option < 0 || message.option >= current_questionset.questions[current_questionset.current].options.length) return;
+                // Store the vote
+                votes[message.option]++;
+                // Store the vote in the public client
+                ws.current_answer = message.option;
                 break;
             default:
                 break;
