@@ -34,6 +34,14 @@ ws_server.on('connection', (ws) => {
                     }
                 });
                 break;
+            case 'stop_question':
+                ws_server.clients.forEach((client) => {
+                    if (client.role === 'public' || client.role === 'live_view') {
+                        // Relay the stop question to public clients
+                        client.send(JSON.stringify({ msg_type: 'stop_question' }));
+                    }
+                });
+                break;
             default:
                 break;
         }

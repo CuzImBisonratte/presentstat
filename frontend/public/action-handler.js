@@ -20,5 +20,15 @@ ws.onmessage = (event) => {
         document.getElementById("option2").innerText = data.question.options[1];
         document.getElementById("option3").innerText = data.question.options[2];
         document.getElementById("option4").innerText = data.question.options[3];
+    } else if (data.msg_type === "stop_question") {
+        // Clear grid
+        document.getElementsByTagName("main")[0].dataset.options = 0;
+        // Clear question text
+        document.getElementById("question-bar").innerText = "";
+        // Clear options
+        document.getElementById("option1").innerText = "";
+        document.getElementById("option2").innerText = "";
+        document.getElementById("option3").innerText = "";
+        document.getElementById("option4").innerText = "";
     }
 }
