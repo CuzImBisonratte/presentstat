@@ -17,16 +17,24 @@ ws_server.on('connection', (ws) => {
                 // Send current questionset to public client or live view
                 if (message.role === 'public' || message.role === 'live_view') {
                     if (current_questionset) {
+                        // Check if the question should be shown
+                        if (message.role === 'public' && !current_questionset.show.public) return;
+                        if (message.role === 'live_view' && !current_questionset.show.live) return;
+                        // Relay the question to public clients
                         ws.send(JSON.stringify({ msg_type: 'start_question', question: current_questionset.questions[current_questionset.current] }));
                     }
                 }
                 break;
             case 'start_question':
+                // Check permissions
                 if (ws.role !== 'controller') return;
                 current_questionset = message.question;
                 const question = current_questionset.questions[message.question.current];
                 ws_server.clients.forEach((client) => {
                     if (client.role === 'public' || client.role === 'live_view') {
+                        // Check if the question should be shown
+                        if (client.role === 'public' && !current_questionset.show.public) return;
+                        if (client.role === 'live_view' && !current_questionset.show.live) return;
                         // Relay the question to public clients
                         client.send(JSON.stringify({ msg_type: 'start_question', question: question }));
                         // Set client current_answer to null
@@ -35,12 +43,50 @@ ws_server.on('connection', (ws) => {
                 });
                 break;
             case 'stop_question':
+                // Check permissions
+                if (ws.role !== 'controller') return;
+                // Clear current questionset
+                current_questionset = null;
+                // Send stop question to public clients
                 ws_server.clients.forEach((client) => {
                     if (client.role === 'public' || client.role === 'live_view') {
                         // Relay the stop question to public clients
                         client.send(JSON.stringify({ msg_type: 'stop_question' }));
                     }
                 });
+                break;
+            case 'show_questions':
+                // Check permissions
+                if (ws.role !== 'controller') return;
+                // Show flags only apply when any question is active
+                if (!current_questionset) return;
+                // Store show flags before changing them
+                const last_show = current_questionset.show;
+                // Set show flags
+                current_questionset.show = message.show;
+                // Check if the show flags have changed
+                if (last_show.public != current_questionset.show.public) {
+                    if (current_questionset.show.public)
+                        ws_server.clients.forEach((client) => {
+                            if (client.role === 'public')
+                                client.send(JSON.stringify({ msg_type: 'start_question', question: current_questionset.questions[current_questionset.current] }));
+                        });
+                    else ws_server.clients.forEach((client) => {
+                        if (client.role === 'public')
+                            client.send(JSON.stringify({ msg_type: 'stop_question' }));
+                    });
+                }
+                if (last_show.live != current_questionset.show.live) {
+                    if (current_questionset.show.live)
+                        ws_server.clients.forEach((client) => {
+                            if (client.role === 'live_view')
+                                client.send(JSON.stringify({ msg_type: 'start_question', question: current_questionset.questions[current_questionset.current] }));
+                        });
+                    else ws_server.clients.forEach((client) => {
+                        if (client.role === 'live_view')
+                            client.send(JSON.stringify({ msg_type: 'stop_question' }));
+                    });
+                }
                 break;
             default:
                 break;
