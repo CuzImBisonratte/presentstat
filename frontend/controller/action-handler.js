@@ -80,16 +80,6 @@ function add_question() {
 // Update question list
 function update_questions() {
     const question_storage = document.getElementById("question_storage");
-    {/* <div class="question">
-                <div class="question_start">
-                    <img src="play.svg" onclick="start_question(0)">
-                </div>
-                <div class="question_delete">
-                    <img src="garbage.svg" onclick="delete_question(0)">
-                </div>
-                <div class="question_title">Warum?</div>
-                <div class="input options"><span class="option1">Option 1</span> - <span class="option2">Option 2</span> - <span class="option3">Option 3</span> - <span class="option4">Option 4</span></div>
-            </div> */}
     question_storage.innerHTML = "";
     questions.questions.forEach((q, i) => {
         const question = document.createElement("div");
