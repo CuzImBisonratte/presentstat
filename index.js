@@ -17,7 +17,7 @@ app.use('/live', live_view);
 
 // Public routes (Served for all guests in the audience)
 const public = require('./routes/public');
-app.use('/public', public);
+app.use('/', public);
 
 // Websocket connection client (Served for all types of clients)
 const ws_client = fs.readFileSync(path.join(__dirname, 'frontend', 'ws_client.js'), 'utf8').replace('{HOST}', config.HOST).replace('{WS_PORT}', config.WS_PORT);
