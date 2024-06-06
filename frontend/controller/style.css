@@ -6,6 +6,13 @@ body {
     inset: 0;
 }
 
+:root {
+    --option1-color: #b63750;
+    --option2-color: #355e9e;
+    --option3-color: #d8a735;
+    --option4-color: #61bd3d;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -156,4 +163,55 @@ body {
     box-shadow: 0px 0px 4px #f00;
     outline: 2px solid red;
     outline-offset: -2px;
+}
+
+/* 
+Overlay (Add-Question)
+*/
+
+.overlay {
+    display: grid;
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    place-content: center;
+    display: none;
+}
+
+/* Add question */
+.overlay .add_question {
+    background-color: #fff;
+    padding: 3rem;
+    border-radius: 1rem;
+}
+
+.add_question button {
+    width: 100%;
+}
+
+#add_question-answer-3,
+#add_question-answer-3-label,
+#add_question-answer-4,
+#add_question-answer-4-label {
+    display: none;
+}
+
+/* 
+Options
+*/
+.option1 {
+    color: var(--option1-color);
+}
+
+.option2 {
+    color: var(--option2-color);
+}
+
+.option3 {
+    color: var(--option3-color);
+}
+
+.option4 {
+    color: var(--option4-color);
 }
