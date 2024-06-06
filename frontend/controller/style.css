@@ -93,6 +93,11 @@ body {
     grid-area: live_preview;
 }
 
+.live_preview iframe {
+    width: 100%;
+    height: 100%;
+}
+
 .question {
     display: grid;
     grid-template-columns: 1fr 3rem 3rem;
