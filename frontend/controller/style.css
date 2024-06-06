@@ -132,3 +132,19 @@ body {
     width: 100%;
     object-fit: contain;
 }
+
+.button_active {
+    -moz-box-shadow: 0px 0px 4px #ffffff;
+    -webkit-box-shadow: 0px 0px 4px #ffffff;
+    box-shadow: 0px 0px 4px #0f0;
+    outline: 2px solid #0f0;
+    outline-offset: -2px;
+}
+
+.button_inactive {
+    -moz-box-shadow: 0px 0px 4px #ffffff;
+    -webkit-box-shadow: 0px 0px 4px #ffffff;
+    box-shadow: 0px 0px 4px #f00;
+    outline: 2px solid red;
+    outline-offset: -2px;
+}

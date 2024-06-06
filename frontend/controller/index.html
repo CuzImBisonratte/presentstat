@@ -29,8 +29,20 @@
             Noch keine Fragen
         </div>
         <div class="hide_options main_grid_field">
-            <div class="public main_grid_field">Hide Public</div>
-            <div class="live main_grid_field">Hide Live</div>
+            <div
+                class="public main_grid_field button_active"
+                id="public_button"
+                onclick="toggleShow('public');"
+            >
+                Show Public
+            </div>
+            <div
+                class="live main_grid_field button_active"
+                id="live_button"
+                onclick="toggleShow('live');"
+            >
+                Show Live
+            </div>
         </div>
         <div class="live_preview main_grid_field"></div>
         <!-- WebSocket -->
