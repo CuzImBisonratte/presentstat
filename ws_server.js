@@ -30,6 +30,9 @@ ws_server.on('connection', (ws) => {
                 // Check permissions
                 if (ws.role !== 'controller') return;
                 current_questionset = message.question;
+                // Empty votes
+                votes = [0, 0, 0, 0];
+                // Send start question to public clients
                 const question = current_questionset.questions[message.question.current];
                 ws_server.clients.forEach((client) => {
                     if (client.role === 'public' || client.role === 'live_view') {
@@ -48,6 +51,7 @@ ws_server.on('connection', (ws) => {
                 if (ws.role !== 'controller') return;
                 // Clear current questionset
                 current_questionset = null;
+                votes = [0, 0, 0, 0];
                 // Send stop question to public clients
                 ws_server.clients.forEach((client) => {
                     if (client.role === 'public' || client.role === 'live_view') {
@@ -80,8 +84,10 @@ ws_server.on('connection', (ws) => {
                 if (last_show.live != current_questionset.show.live) {
                     if (current_questionset.show.live)
                         ws_server.clients.forEach((client) => {
-                            if (client.role === 'live_view')
+                            if (client.role === 'live_view') {
                                 client.send(JSON.stringify({ msg_type: 'start_question', question: current_questionset.questions[current_questionset.current] }));
+                                client.send(JSON.stringify({ msg_type: 'vote', votes: votes }));
+                            }
                         });
                     else ws_server.clients.forEach((client) => {
                         if (client.role === 'live_view')
@@ -100,6 +106,12 @@ ws_server.on('connection', (ws) => {
                 votes[message.option]++;
                 // Store the vote in the public client
                 ws.current_answer = message.option;
+                // Send the votes to the live view
+                ws_server.clients.forEach((client) => {
+                    if (client.role === 'live_view') {
+                        client.send(JSON.stringify({ msg_type: 'vote', votes: votes }));
+                    }
+                });
                 break;
             default:
                 break;
