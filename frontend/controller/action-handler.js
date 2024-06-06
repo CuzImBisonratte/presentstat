@@ -111,5 +111,30 @@ function update_questions() {
         `;
         question_storage.appendChild(question);
     });
+}
 
+// Export handler
+function export_questions() {
+    const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(questions.questions))}`;
+    const a = document.createElement("a");
+    a.href = data;
+    a.download = "questions.json";
+    a.click();
+}
+
+// Import handler
+function import_questions() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            questions.questions = JSON.parse(e.target.result);
+            update_questions();
+        }
+        reader.readAsText(file);
+    }
+    input.click();
 }
