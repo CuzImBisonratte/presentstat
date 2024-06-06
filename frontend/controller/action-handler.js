@@ -176,3 +176,10 @@ function stop_question() {
     // Update question list
     update_questions();
 }
+
+// Delete question
+function delete_question(i) {
+    questions.questions.splice(i, 1);
+    if (i < questions.current) questions.current--;
+    update_questions();
+}
