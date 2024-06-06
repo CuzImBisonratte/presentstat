@@ -40,7 +40,7 @@ ws.onmessage = (event) => {
 
 function vote(option) {
     // Check if a vote has already been cast
-    if (voted) return;
+    // if (voted) return;
     // Send vote
     ws.send(JSON.stringify({ msg_type: "vote", option: option - 1 }));
     voted = true;

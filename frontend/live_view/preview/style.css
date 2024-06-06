@@ -1,0 +1,39 @@
+/* END Font */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100% !important;
+    inset: 0;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+:root {
+    --option1-color: #b63750;
+    --option2-color: #355e9e;
+    --option3-color: #b89715;
+    --option4-color: #419d1d;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "main";
+}
+
+main {
+    grid-area: main;
+}
+
+#canvasContainer {
+    margin: auto;
+    padding: 1rem;
+}

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello from live view');
-});
+// Serve the previw page (without title bar - not for live view - part of controller)
+router.use('/preview',
+    express.static('frontend/live_view/preview')
+);
 
 // Serve the ../frontend/live_view dir
 router.use(express.static('frontend/live_view'));
