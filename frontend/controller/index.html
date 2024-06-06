@@ -35,11 +35,6 @@
         <div class="live_preview main_grid_field"></div>
         <!-- WebSocket -->
         <script src="/ws"></script>
-        <script>
-            ws.onopen = () =>
-                ws.send(
-                    JSON.stringify({ msg_type: "register", role: "controller" })
-                );
-        </script>
+        <script src="action-handler.js"></script>
     </body>
 </html>
