@@ -7,7 +7,7 @@ ws.onopen = () =>
 // Question logic
 let questions = {
     questions: [],
-    current: 0,
+    current: -1,
     show: {
         live: true,
         public: true
@@ -82,6 +82,9 @@ function update_questions() {
     const question_storage = document.getElementById("question_storage");
     question_storage.innerHTML = "";
     questions.questions.forEach((q, i) => {
+        // If current question, skip
+        if (i == questions.current) return;
+        // Generate question element
         const question = document.createElement("div");
         question.classList.add("question");
         question.innerHTML = `
@@ -127,4 +130,49 @@ function import_questions() {
         reader.readAsText(file);
     }
     input.click();
+}
+
+// Start question
+function start_question(i) {
+    // Send WS message
+    ws.send(JSON.stringify({ msg_type: "start_question", question: questions.questions[i] }));
+    // Set current question
+    questions.current = i;
+    // Update current_question-View
+    const question = document.createElement("div");
+    question.classList.add("question");
+    question.innerHTML = `
+        <div class="question_title">${questions.questions[i].question}</div>
+        <div class="question_delete">
+            <img src="stop.svg" onclick="stop_question(0)">
+        </div>
+        <div class="input options">
+            <span class="option1">${questions.questions[i].options[0]}</span> - 
+            <span class="option2">${questions.questions[i].options[1]}${questions.questions[i].options[2] ? " - " : ""}</span>
+            <span class="option3">${questions.questions[i].options[2] ? questions.questions[i].options[2] + (questions.questions[i].options[3] ? " - " : "") : ""}</span>
+            <span class="option4">${questions.questions[i].options[3] ? questions.questions[i].options[3] : ""}</span>
+        </div>
+    `;
+    document.getElementById("current_question").innerHTML = "";
+    document.getElementById("current_question").appendChild(question);
+    // Update question list
+    update_questions();
+}
+
+// Stop question
+function stop_question() {
+    // Send WS message
+    ws.send(JSON.stringify({ msg_type: "stop_question" }));
+    // Reset current question
+    questions.current = -1;
+    // Update current_question-View
+    document.getElementById("current_question").innerHTML = `
+    <div class="question" style="visibility: hidden">
+                <div class="question_start">
+                    <img src="play.svg" />
+                </div>
+                <div class="question_title">Warum?</div>
+            </div>`;
+    // Update question list
+    update_questions();
 }
