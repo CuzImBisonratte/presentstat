@@ -32,6 +32,8 @@ function toggleShow(output) {
     questions.show.public ? show_public.classList.remove("button_inactive") : show_public.classList.add("button_inactive");
     questions.show.live ? show_live.classList.add("button_active") : show_live.classList.remove("button_active");
     questions.show.live ? show_live.classList.remove("button_inactive") : show_live.classList.add("button_inactive");
+    // Send WS message
+    ws.send(JSON.stringify({ msg_type: "show_questions", show: questions.show }));
 }
 
 // Add question - dialog
@@ -134,10 +136,10 @@ function import_questions() {
 
 // Start question
 function start_question(i) {
-    // Send WS message
-    ws.send(JSON.stringify({ msg_type: "start_question", question: questions.questions[i] }));
     // Set current question
     questions.current = i;
+    // Send WS message
+    ws.send(JSON.stringify({ msg_type: "start_question", question: questions }));
     // Update current_question-View
     const question = document.createElement("div");
     question.classList.add("question");
