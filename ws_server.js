@@ -106,6 +106,8 @@ ws_server.on('connection', (ws) => {
                 votes[message.option]++;
                 // Store the vote in the public client
                 ws.current_answer = message.option;
+                // Check if live view is enabled
+                if (!current_questionset.show.live) return;
                 // Send the votes to the live view
                 ws_server.clients.forEach((client) => {
                     if (client.role === 'live_view') {
